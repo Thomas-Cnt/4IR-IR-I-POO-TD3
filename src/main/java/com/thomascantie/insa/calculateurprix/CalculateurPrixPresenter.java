@@ -1,4 +1,4 @@
-package com.fredericboisguerin.insa.calculateurprix;
+package com.thomascantie.insa.calculateurprix;
 
 public class CalculateurPrixPresenter {
     private final CalculateurPrixView calculateurPrixView;

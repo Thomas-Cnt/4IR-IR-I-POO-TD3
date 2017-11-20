@@ -1,4 +1,4 @@
-package com.fredericboisguerin.insa.calculateurprix;
+package com.thomascantie.insa.calculateurprix;
 
 import static java.awt.BorderLayout.EAST;
 import static java.awt.BorderLayout.SOUTH;

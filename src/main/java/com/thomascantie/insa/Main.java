@@ -1,6 +1,6 @@
-package com.fredericboisguerin.insa;
+package com.thomascantie.insa;
 
-import com.fredericboisguerin.insa.calculateurprix.CalculateurPrixView;
+import com.thomascantie.insa.calculateurprix.CalculateurPrixView;
 
 /**
  * Hello world!
