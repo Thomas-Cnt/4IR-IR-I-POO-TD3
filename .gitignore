@@ -1,0 +1,10 @@
+
+# IntelliJ IDEA Ignores
+.idea/
+*.iml
+
+# specific Ignores
+target/
+
+# CSV ignores
+*.csv
