@@ -17,6 +17,7 @@ public class CalculateurPrixView extends JFrame {
     private final CalculateurPrixPresenter presenter;
     private JFormattedTextField fieldMontantHT;
     private JFormattedTextField fieldMontantTTC;
+    private Country country = Country.FRANCE;
 
     public CalculateurPrixView() throws HeadlessException {
         super("Calculateur de prix");
@@ -68,6 +69,22 @@ public class CalculateurPrixView extends JFrame {
         pLeft.add(Box.createVerticalGlue());
         pLeft.add(Box.createVerticalGlue());
 
+        JLabel labelPays = new JLabel("Pays : ", JLabel.TRAILING);
+        pLeft.add(labelPays);
+        JComboBox<Country> comboPays = new JComboBox<Country>();
+        for (Country c : Country.values()) {
+            comboPays.addItem(c);
+            if (c.equals(Country.FRANCE))
+                comboPays.setSelectedItem(c);
+        }
+        comboPays.addActionListener(e -> this.country = (Country) comboPays.getSelectedItem());
+        comboPays.setToolTipText("Sélectionnez le pays");
+        labelPays.setLabelFor(comboPays);
+        pLeft.add(comboPays);
+
+        pLeft.add(Box.createVerticalGlue());
+        pLeft.add(Box.createVerticalGlue());
+
         JLabel labelMontantHT = new JLabel("Montant HT : ", JLabel.TRAILING);
         pLeft.add(labelMontantHT);
         this.fieldMontantHT = new JFormattedTextField(NumberFormat.getCurrencyInstance());
@@ -88,7 +105,7 @@ public class CalculateurPrixView extends JFrame {
         pLeft.add(this.fieldMontantTTC);
 
         SpringUtilities.makeCompactGrid(pLeft,
-                7, 2,          //rows, cols
+                9, 2,          //rows, cols
                 6, 6,        //initX, initY
                 6, 6);       //xPad, yPad
 
@@ -99,11 +116,13 @@ public class CalculateurPrixView extends JFrame {
         pRight.add(Box.createVerticalGlue());
         pRight.add(Box.createVerticalGlue());
         pRight.add(Box.createVerticalGlue());
+        pRight.add(Box.createVerticalGlue());
 
         JButton buttonCompute = new JButton("Calculer");
-        buttonCompute.addActionListener(e -> this.presenter.onComputeButtonClicked(fieldPrixArticle.getText(), fieldQuantite.getText()));
+        buttonCompute.addActionListener(e -> this.presenter.onComputeButtonClicked(fieldPrixArticle.getText(), fieldQuantite.getText(), this.country));
         pRight.add(buttonCompute);
 
+        pRight.add(Box.createVerticalGlue());
         pRight.add(Box.createVerticalGlue());
         pRight.add(Box.createVerticalGlue());
         pRight.add(Box.createVerticalGlue());
@@ -136,8 +155,8 @@ public class CalculateurPrixView extends JFrame {
 
     public void display() {
         this.pack();
-        this.setSize(460, 230);
-        this.setResizable(false);
+        this.setSize(460, 260);
+        this.setResizable(true);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
     }
