@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 
 public class CalculateurPrixPresenter {
+
+    private static final double TAXES = 0.20; // 20%
+
     private final CalculateurPrixView calculateurPrixView;
 
     public CalculateurPrixPresenter(CalculateurPrixView calculateurPrixView) {
@@ -19,9 +22,14 @@ public class CalculateurPrixPresenter {
         } catch (Exception e) {
             this.calculateurPrixView.afficherErreur(e.getMessage());
         }
+
         BigDecimal res = new BigDecimal(montant);
         res = res.multiply(new BigDecimal(quantite));
 
         this.calculateurPrixView.afficherMontantHT(res.setScale(2, BigDecimal.ROUND_HALF_EVEN).doubleValue());
+
+        res = res.add(res.multiply(new BigDecimal(TAXES)));
+
+        this.calculateurPrixView.afficherMontantTTC(res.setScale(2, BigDecimal.ROUND_HALF_EVEN).doubleValue());
     }
 }

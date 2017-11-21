@@ -16,6 +16,7 @@ public class CalculateurPrixView extends JFrame {
 
     private final CalculateurPrixPresenter presenter;
     private JFormattedTextField fieldMontantHT;
+    private JFormattedTextField fieldMontantTTC;
 
     public CalculateurPrixView() throws HeadlessException {
         super("Calculateur de prix");
@@ -70,13 +71,24 @@ public class CalculateurPrixView extends JFrame {
         JLabel labelMontantHT = new JLabel("Montant HT : ", JLabel.TRAILING);
         pLeft.add(labelMontantHT);
         this.fieldMontantHT = new JFormattedTextField(NumberFormat.getCurrencyInstance());
-        fieldMontantHT.setValue(0.00);
-        fieldMontantHT.setEditable(false);
-        labelMontantHT.setLabelFor(fieldMontantHT);
-        pLeft.add(fieldMontantHT);
+        this.fieldMontantHT.setValue(0.00);
+        this.fieldMontantHT.setEditable(false);
+        labelMontantHT.setLabelFor(this.fieldMontantHT);
+        pLeft.add(this.fieldMontantHT);
+
+        pLeft.add(Box.createVerticalGlue());
+        pLeft.add(Box.createVerticalGlue());
+
+        JLabel labelMontantTTC = new JLabel("Montant TTC (France) : ", JLabel.TRAILING);
+        pLeft.add(labelMontantTTC);
+        this.fieldMontantTTC = new JFormattedTextField(NumberFormat.getCurrencyInstance());
+        this.fieldMontantTTC.setValue(0.00);
+        this.fieldMontantTTC.setEditable(false);
+        labelMontantTTC.setLabelFor(this.fieldMontantTTC);
+        pLeft.add(this.fieldMontantTTC);
 
         SpringUtilities.makeCompactGrid(pLeft,
-                5, 2,          //rows, cols
+                7, 2,          //rows, cols
                 6, 6,        //initX, initY
                 6, 6);       //xPad, yPad
 
@@ -86,11 +98,13 @@ public class CalculateurPrixView extends JFrame {
 
         pRight.add(Box.createVerticalGlue());
         pRight.add(Box.createVerticalGlue());
+        pRight.add(Box.createVerticalGlue());
 
         JButton buttonCompute = new JButton("Calculer");
         buttonCompute.addActionListener(e -> this.presenter.onComputeButtonClicked(fieldPrixArticle.getText(), fieldQuantite.getText()));
         pRight.add(buttonCompute);
 
+        pRight.add(Box.createVerticalGlue());
         pRight.add(Box.createVerticalGlue());
         pRight.add(Box.createVerticalGlue());
 
@@ -112,13 +126,17 @@ public class CalculateurPrixView extends JFrame {
         this.fieldMontantHT.setText(NumberFormat.getCurrencyInstance().format(montant));
     }
 
+    public void afficherMontantTTC(double montant) {
+        this.fieldMontantTTC.setText(NumberFormat.getCurrencyInstance().format(montant));
+    }
+
     public void afficherErreur(String message) {
         showMessageDialog(this, message, "Erreur", ERROR_MESSAGE);
     }
 
     public void display() {
         this.pack();
-        this.setSize(450, 181);
+        this.setSize(460, 230);
         this.setResizable(false);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
