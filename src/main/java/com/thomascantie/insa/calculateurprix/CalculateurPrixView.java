@@ -8,6 +8,8 @@ import static javax.swing.JOptionPane.showMessageDialog;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.NumberFormat;
 
 import javax.swing.*;
@@ -88,21 +90,16 @@ public class CalculateurPrixView extends JFrame {
 
 
         JPanel pRight = new JPanel();
-        pRight.setLayout(new BoxLayout(pRight, BoxLayout.Y_AXIS));
+        pRight.setLayout(new BoxLayout(pRight, BoxLayout.X_AXIS));
 
-        pRight.add(Box.createVerticalGlue());
-        pRight.add(Box.createVerticalGlue());
-        pRight.add(Box.createVerticalGlue());
-        pRight.add(Box.createVerticalGlue());
+        pRight.add(Box.createRigidArea(new Dimension(20, 200)));
+
+        pRight.add(new JSeparator(SwingConstants.VERTICAL));
 
         JButton buttonCompute = new JButton("Calculer");
         buttonCompute.addActionListener(e -> this.presenter.onComputeButtonClicked(fieldPrixArticle.getText(), fieldQuantite.getText(), this.country));
         pRight.add(buttonCompute);
 
-        pRight.add(Box.createVerticalGlue());
-        pRight.add(Box.createVerticalGlue());
-        pRight.add(Box.createVerticalGlue());
-        pRight.add(Box.createVerticalGlue());
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS ));
@@ -132,7 +129,7 @@ public class CalculateurPrixView extends JFrame {
 
     public void display() {
         this.pack();
-        this.setSize(460, 260);
+        this.setSize(460, 300);
         this.setResizable(false);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
