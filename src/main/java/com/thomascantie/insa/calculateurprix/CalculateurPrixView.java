@@ -22,30 +22,7 @@ public class CalculateurPrixView extends JFrame {
     public CalculateurPrixView() throws HeadlessException {
         super("Calculateur de prix");
 
-        this.addComponentListener(new ComponentListener() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                System.out.println(CalculateurPrixView.this.getSize());
-            }
-
-            @Override
-            public void componentMoved(ComponentEvent e) {
-
-            }
-
-            @Override
-            public void componentShown(ComponentEvent e) {
-
-            }
-
-            @Override
-            public void componentHidden(ComponentEvent e) {
-
-            }
-        });
-
         this.presenter = new CalculateurPrixPresenter(this);
-
 
         JPanel pLeft = new JPanel(new SpringLayout());
 
@@ -96,7 +73,7 @@ public class CalculateurPrixView extends JFrame {
         pLeft.add(Box.createVerticalGlue());
         pLeft.add(Box.createVerticalGlue());
 
-        JLabel labelMontantTTC = new JLabel("Montant TTC (France) : ", JLabel.TRAILING);
+        JLabel labelMontantTTC = new JLabel("Montant TTC : ", JLabel.TRAILING);
         pLeft.add(labelMontantTTC);
         this.fieldMontantTTC = new JFormattedTextField(NumberFormat.getCurrencyInstance());
         this.fieldMontantTTC.setValue(0.00);
@@ -156,7 +133,7 @@ public class CalculateurPrixView extends JFrame {
     public void display() {
         this.pack();
         this.setSize(460, 260);
-        this.setResizable(true);
+        this.setResizable(false);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
     }
