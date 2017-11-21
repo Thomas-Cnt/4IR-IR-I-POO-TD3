@@ -37,14 +37,17 @@ public class CalculateurPrixPresenter {
     }
 
     public void onComputeButtonClicked(String montantArticleAsText, String quantiteArticleAsText, Country country) {
-        float montant = 0f;
-        int quantite = 0;
-        try {
-            montant = Float.parseFloat(montantArticleAsText);
-            quantite = Integer.parseInt(quantiteArticleAsText);
-        } catch (Exception e) {
-            this.calculateurPrixView.afficherErreur(e.getMessage());
-        }
+        if (!montantArticleAsText.matches("[0-9]+(.[0-9]{1,2})?"))
+            this.calculateurPrixView.afficherErreur("Le montant n'est pas valide !");
+        else if (!quantiteArticleAsText.matches("[0-9]+"))
+            this.calculateurPrixView.afficherErreur("La quantité n'est pas valide !");
+        else
+            this.compute(montantArticleAsText, quantiteArticleAsText, country);
+    }
+
+    private void compute(String montantArticleAsText, String quantiteArticleAsText, Country country) {
+        double montant = Float.parseFloat(montantArticleAsText);
+        int quantite = Integer.parseInt(quantiteArticleAsText);
 
         BigDecimal res = new BigDecimal(montant);
         res = res.multiply(new BigDecimal(quantite));
