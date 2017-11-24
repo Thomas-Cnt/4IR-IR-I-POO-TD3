@@ -32,22 +32,22 @@ public class Article {
 		TAXES = Collections.unmodifiableMap(map);
 	}
 
-	private double montant;
-	private int quantite;
+	private String montant;
+	private String quantite;
 	private Country country;
 
 	public Article(String montantAsText, String quantiteAsText, Country country) {
-		this.montant = Double.parseDouble(montantAsText);
-		this.quantite = Integer.parseInt(quantiteAsText);
+		this.montant = montantAsText;
+		this.quantite = quantiteAsText;
 		this.country = country;
 	}
 
 	public boolean hasValidMontant() {
-		return Double.toString(this.montant).matches("[0-9]+(.[0-9]{1,2})?");
+		return this.montant.matches("[0-9]+(.[0-9]{1,2})?");
 	}
 
 	public boolean hasValidQuantite() {
-		return Integer.toString(this.quantite).matches("[0-9]+");
+		return this.quantite.matches("[0-9]+");
 	}
 
 	public double getMontantHT() {
