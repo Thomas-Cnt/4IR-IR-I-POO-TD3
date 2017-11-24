@@ -1,15 +1,12 @@
 package com.thomascantie.insa.calculateurprix;
 
+import com.thomascantie.insa.util.Country;
 import com.thomascantie.insa.util.SpringUtilities;
 
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 import java.awt.*;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.text.NumberFormat;
 
 import javax.swing.*;

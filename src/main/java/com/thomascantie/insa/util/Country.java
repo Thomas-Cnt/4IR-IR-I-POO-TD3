@@ -1,4 +1,4 @@
-package com.thomascantie.insa.calculateurprix;
+package com.thomascantie.insa.util;
 
 public enum Country {
     BELGIQUE("Belgique"),
