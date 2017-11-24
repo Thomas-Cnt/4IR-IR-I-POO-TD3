@@ -37,7 +37,7 @@ public class Article {
 	private Country country;
 
 	public Article(String montantAsText, String quantiteAsText, Country country) {
-		this.montant = montantAsText;
+		this.montant = montantAsText.replace(',', '.');
 		this.quantite = quantiteAsText;
 		this.country = country;
 	}
