@@ -94,7 +94,7 @@ public class CalculateurPrixView extends JFrame {
         pRight.add(new JSeparator(SwingConstants.VERTICAL));
 
         JButton buttonCompute = new JButton("Calculer");
-        buttonCompute.addActionListener(e -> this.presenter.onComputeButtonClicked(fieldPrixArticle.getText(), fieldQuantite.getText(), this.country));
+        buttonCompute.addActionListener(e -> this.presenter.onComputeButtonClicked(new Article(fieldPrixArticle.getText(), fieldQuantite.getText(), this.country)));
         pRight.add(buttonCompute);
 
 
