@@ -1,12 +1,13 @@
 package com.thomascantie.insa.calculateurprix;
 
+import com.thomascantie.insa.util.Country;
+
 import java.math.BigDecimal;
-import java.text.ParseException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.thomascantie.insa.calculateurprix.Country.*;
+import static com.thomascantie.insa.util.Country.*;
 
 public class CalculateurPrixPresenter {
 
