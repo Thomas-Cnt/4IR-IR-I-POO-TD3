@@ -1,5 +1,6 @@
 package com.thomascantie.insa.calculateurprix;
 
+import com.sun.javafx.font.FontFactory;
 import com.thomascantie.insa.util.Country;
 import com.thomascantie.insa.util.SpringUtilities;
 
@@ -14,6 +15,9 @@ import javax.swing.*;
 public class CalculateurPrixView extends JFrame {
 
     private final CalculateurPrixPresenter presenter;
+    private final PressEnterListener enterListener;
+    private JTextField fieldPrixArticle;
+    private JTextField fieldQuantite;
     private JFormattedTextField fieldMontantHT;
     private JFormattedTextField fieldMontantTTC;
     private Country country = Country.FRANCE;
@@ -24,38 +28,47 @@ public class CalculateurPrixView extends JFrame {
         // association de la fenêtre au controleur
         this.presenter = new CalculateurPrixPresenter(this);
 
+        this.enterListener = new PressEnterListener(this);
 
         /*
          * Création des différents composants
          */
+        Font fontStyle = new Font(Font.SANS_SERIF, Font.PLAIN, 18);
 
         // panneau pour les champs de saisie
         JPanel pLeft = new JPanel(new SpringLayout());
 
         /* prix de l'article */
         JLabel labelPrixArticle = new JLabel("Prix d'un article (€) : ", JLabel.TRAILING);
+        labelPrixArticle.setFont(fontStyle);
         pLeft.add(labelPrixArticle);
-        JTextField fieldPrixArticle = new JTextField(10);
-        fieldPrixArticle.setToolTipText("Entrez ici le montant d'un article");
-        labelPrixArticle.setLabelFor(fieldPrixArticle);
-        pLeft.add(fieldPrixArticle);
+        this.fieldPrixArticle = new JTextField(10);
+        this.fieldPrixArticle.setToolTipText("Entrez ici le montant d'un article");
+        this.fieldPrixArticle.setFont(fontStyle);
+        this.fieldPrixArticle.addKeyListener(this.enterListener);
+        labelPrixArticle.setLabelFor(this.fieldPrixArticle);
+        pLeft.add(this.fieldPrixArticle);
 
         pLeft.add(Box.createVerticalGlue());
         pLeft.add(Box.createVerticalGlue());
 
         /* quantité d'articles */
         JLabel labelQuantite = new JLabel("Quantité : ", JLabel.TRAILING);
+        labelQuantite.setFont(fontStyle);
         pLeft.add(labelQuantite);
-        JTextField fieldQuantite = new JTextField(10);
-        fieldQuantite.setToolTipText("Entrez ici la quantité de l'article");
-        labelQuantite.setLabelFor(fieldQuantite);
-        pLeft.add(fieldQuantite);
+        this.fieldQuantite = new JTextField(10);
+        this.fieldQuantite.setToolTipText("Entrez ici la quantité de l'article");
+        this.fieldQuantite.setFont(fontStyle);
+        this.fieldQuantite.addKeyListener(this.enterListener);
+        labelQuantite.setLabelFor(this.fieldQuantite);
+        pLeft.add(this.fieldQuantite);
 
         pLeft.add(Box.createVerticalGlue());
         pLeft.add(Box.createVerticalGlue());
 
         /* choix du pays */
         JLabel labelPays = new JLabel("Pays : ", JLabel.TRAILING);
+        labelPays.setFont(fontStyle);
         pLeft.add(labelPays);
         JComboBox<Country> comboPays = new JComboBox<Country>();
         for (Country c : Country.values()) {
@@ -65,6 +78,8 @@ public class CalculateurPrixView extends JFrame {
         }
         comboPays.addActionListener(e -> this.country = (Country) comboPays.getSelectedItem());
         comboPays.setToolTipText("Sélectionnez le pays");
+        comboPays.setFont(fontStyle);
+        comboPays.addKeyListener(this.enterListener);
         labelPays.setLabelFor(comboPays);
         pLeft.add(comboPays);
 
@@ -73,9 +88,11 @@ public class CalculateurPrixView extends JFrame {
 
         /* montant hors taxes */
         JLabel labelMontantHT = new JLabel("Montant HT : ", JLabel.TRAILING);
+        labelMontantHT.setFont(fontStyle);
         pLeft.add(labelMontantHT);
         this.fieldMontantHT = new JFormattedTextField(NumberFormat.getCurrencyInstance());
         this.fieldMontantHT.setValue(0.00);
+        this.fieldMontantHT.setFont(fontStyle);
         this.fieldMontantHT.setEditable(false);
         labelMontantHT.setLabelFor(this.fieldMontantHT);
         pLeft.add(this.fieldMontantHT);
@@ -85,9 +102,11 @@ public class CalculateurPrixView extends JFrame {
 
         /* montant toutes taxes comprises */
         JLabel labelMontantTTC = new JLabel("Montant TTC : ", JLabel.TRAILING);
+        labelMontantTTC.setFont(fontStyle);
         pLeft.add(labelMontantTTC);
         this.fieldMontantTTC = new JFormattedTextField(NumberFormat.getCurrencyInstance());
         this.fieldMontantTTC.setValue(0.00);
+        this.fieldMontantTTC.setFont(fontStyle);
         this.fieldMontantTTC.setEditable(false);
         labelMontantTTC.setLabelFor(this.fieldMontantTTC);
         pLeft.add(this.fieldMontantTTC);
@@ -98,7 +117,7 @@ public class CalculateurPrixView extends JFrame {
                 6, 6,       // initX, initY
                 6, 6);      // xPad, yPad
 
-        
+
         JPanel pRight = new JPanel();
         pRight.setLayout(new BoxLayout(pRight, BoxLayout.X_AXIS));
 
@@ -108,7 +127,9 @@ public class CalculateurPrixView extends JFrame {
 
         /* calcul des montants */
         JButton buttonCompute = new JButton("Calculer");
-        buttonCompute.addActionListener(e -> this.presenter.onComputeButtonClicked(new Article(fieldPrixArticle.getText(), fieldQuantite.getText(), this.country)));
+        buttonCompute.setFont(fontStyle.deriveFont(Font.BOLD));
+        buttonCompute.addActionListener(e -> this.presenter.onComputeButtonClicked(new Article(this.fieldPrixArticle.getText(), this.fieldQuantite.getText(), this.country)));
+        buttonCompute.addKeyListener(this.enterListener);
         pRight.add(buttonCompute);
 
         /*
@@ -129,6 +150,10 @@ public class CalculateurPrixView extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
+    public Article getInputedArticle() {
+        return new Article(this.fieldPrixArticle.getText(), this.fieldQuantite.getText(), this.country);
+    }
+
     public void afficherMontantHT(double montant) {
         this.fieldMontantHT.setText(NumberFormat.getCurrencyInstance().format(montant));
     }
@@ -143,7 +168,7 @@ public class CalculateurPrixView extends JFrame {
 
     public void display() {
         this.pack();
-        this.setSize(460, 300);
+        this.setSize(560, 300);
         this.setResizable(false);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
